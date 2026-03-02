@@ -1,0 +1,20 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/shared-types"
+    },
+    {
+      "path": "./packages/parser-core"
+    },
+    {
+      "path": "./packages/graph-core"
+    },
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./apps/cli"
+    }
+  ]
+}
