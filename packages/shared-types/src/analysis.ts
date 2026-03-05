@@ -1,3 +1,5 @@
+import type { DependencyGraph } from "./graph.js";
+
 export interface FileMetadata {
   path: string;
   directory: string;
@@ -50,6 +52,7 @@ export interface RepositoryAnalysisResult {
   scan: RepositoryScanResult;
   packageMetadata?: PackageDependencyMetadata;
   stack: StackDetectionResult;
+  graph: DependencyGraph;
   endpoints: EndpointMetadata[];
   summaries: {
     architecture?: SummarySection;
