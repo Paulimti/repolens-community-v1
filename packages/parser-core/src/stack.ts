@@ -26,14 +26,14 @@ export function detectStackFromPackageMetadata(
     ? [packageMetadata.packageManager.split("@")[0] ?? packageMetadata.packageManager]
     : [];
 
-  return {
+  return normalizeStackDetectionResult({
     languages,
     runtimes,
     frameworks,
     testing,
     packageManagers,
     metadataSources: packageMetadata ? ["package.json"] : []
-  };
+  });
 }
 
 export function detectFrameworksFromProjectStructure(
@@ -61,12 +61,32 @@ export function detectFrameworksFromProjectStructure(
     frameworks.push("express");
   }
 
-  return {
+  return normalizeStackDetectionResult({
     languages,
     runtimes: [],
     frameworks,
     testing: [],
     packageManagers: [],
     metadataSources: frameworks.length > 0 ? ["project-structure"] : []
+  });
+}
+
+export function normalizeStackDetectionResult(
+  ...results: StackDetectionResult[]
+): StackDetectionResult {
+  const collect = (
+    selector: (result: StackDetectionResult) => string[]
+  ): string[] =>
+    Array.from(new Set(results.flatMap(selector))).sort((left, right) =>
+      left.localeCompare(right)
+    );
+
+  return {
+    languages: collect((result) => result.languages),
+    runtimes: collect((result) => result.runtimes),
+    frameworks: collect((result) => result.frameworks),
+    testing: collect((result) => result.testing),
+    packageManagers: collect((result) => result.packageManagers),
+    metadataSources: collect((result) => result.metadataSources)
   };
 }
