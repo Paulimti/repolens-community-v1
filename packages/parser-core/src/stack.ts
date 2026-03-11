@@ -1,4 +1,5 @@
 import type {
+  FileMetadata,
   PackageDependencyMetadata,
   StackDetectionResult
 } from "@repolens/shared-types";
@@ -32,5 +33,40 @@ export function detectStackFromPackageMetadata(
     testing,
     packageManagers,
     metadataSources: packageMetadata ? ["package.json"] : []
+  };
+}
+
+export function detectFrameworksFromProjectStructure(
+  files: FileMetadata[]
+): StackDetectionResult {
+  const repositoryPaths = new Set(files.map((file) => file.path));
+  const frameworks: string[] = [];
+  const languages = files.some((file) => file.extension === ".ts" || file.extension === ".tsx")
+    ? ["typescript", "javascript"]
+    : ["javascript"];
+
+  if (repositoryPaths.has("next.config.js") || repositoryPaths.has("next.config.mjs")) {
+    frameworks.push("next");
+  }
+
+  if (
+    repositoryPaths.has("app/layout.tsx") ||
+    repositoryPaths.has("app/layout.jsx") ||
+    repositoryPaths.has("pages/_app.tsx")
+  ) {
+    frameworks.push("react");
+  }
+
+  if (files.some((file) => file.path.includes("/routes/") || file.path.startsWith("routes/"))) {
+    frameworks.push("express");
+  }
+
+  return {
+    languages,
+    runtimes: [],
+    frameworks,
+    testing: [],
+    packageManagers: [],
+    metadataSources: frameworks.length > 0 ? ["project-structure"] : []
   };
 }
