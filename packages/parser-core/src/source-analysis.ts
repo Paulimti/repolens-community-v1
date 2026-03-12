@@ -1,4 +1,4 @@
-import type { SourceImport } from "@repolens/shared-types";
+import type { SourceExport, SourceImport } from "@repolens/shared-types";
 import { SyntaxKind, type SourceFile } from "ts-morph";
 
 export function extractImports(sourceFile: SourceFile): SourceImport[] {
@@ -32,4 +32,19 @@ export function extractImports(sourceFile: SourceFile): SourceImport[] {
     });
 
   return [...staticImports, ...requireImports];
+}
+
+export function extractExports(sourceFile: SourceFile): SourceExport[] {
+  const namedExports = sourceFile
+    .getExportSymbols()
+    .map((exportSymbol) => ({
+      kind: "named" as const,
+      name: exportSymbol.getName()
+    }));
+
+  if (sourceFile.getDefaultExportSymbol()) {
+    return [...namedExports, { kind: "default", name: "default" }];
+  }
+
+  return namedExports;
 }
