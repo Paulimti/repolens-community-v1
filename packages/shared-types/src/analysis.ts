@@ -41,6 +41,14 @@ export interface EndpointMetadata {
   handlerName?: string;
 }
 
+export interface ModuleMetadata {
+  id: string;
+  name: string;
+  filePath: string;
+  directory: string;
+  type: "unknown" | "component" | "service" | "route";
+}
+
 export interface SummarySection {
   title: string;
   bullets: string[];
@@ -53,6 +61,7 @@ export interface RepositoryAnalysisResult {
   packageMetadata?: PackageDependencyMetadata;
   stack: StackDetectionResult;
   graph: DependencyGraph;
+  modules: ModuleMetadata[];
   endpoints: EndpointMetadata[];
   summaries: {
     architecture?: SummarySection;
