@@ -1,3 +1,4 @@
+export * from "./api-analysis.js";
 export * from "./ignore.js";
 export * from "./module-detection.js";
 export * from "./package-json.js";
