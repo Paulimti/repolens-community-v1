@@ -2,6 +2,7 @@ import type { EndpointMetadata } from "@repolens/shared-types";
 import { SyntaxKind, type SourceFile } from "ts-morph";
 
 const EXPRESS_METHODS = new Set(["get", "post", "put", "patch", "delete"]);
+const NEXTJS_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"];
 
 export function extractExpressRoutes(
   sourceFile: SourceFile,
@@ -41,4 +42,45 @@ export function extractExpressRoutes(
       }
     ];
   });
+}
+
+function toNextJsRoutePath(filePath: string): string {
+  return (
+    "/" +
+    filePath
+      .replace(/^app\//, "")
+      .replace(/\/route\.(ts|tsx|js|jsx)$/, "")
+      .replace(/\/page\.(ts|tsx|js|jsx)$/, "")
+  );
+}
+
+export function extractNextJsRouteHandlers(
+  sourceFile: SourceFile,
+  filePath: string
+): EndpointMetadata[] {
+  if (!/^app\/.+\/route\.(ts|tsx|js|jsx)$/.test(filePath)) {
+    return [];
+  }
+
+  const routePath = toNextJsRoutePath(filePath);
+
+  return sourceFile
+    .getFunctions()
+    .filter((fn) => {
+      const name = fn.getName();
+
+      return Boolean(name && NEXTJS_METHODS.includes(name));
+    })
+    .map((fn) => {
+      const handlerName = fn.getName() ?? "GET";
+
+      return {
+        id: `nextjs:${filePath}:${handlerName}:${routePath}`,
+        framework: "nextjs",
+        filePath,
+        method: handlerName,
+        routePath,
+        handlerName
+      };
+    });
 }
