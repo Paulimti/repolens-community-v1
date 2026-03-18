@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "dependencies": {
+    "@repolens/graph-core": "0.1.0",
+    "@repolens/parser-core": "0.1.0",
+    "@repolens/shared-types": "0.1.0"
+  },
   "exports": {
     ".": "./dist/index.js"
   }
