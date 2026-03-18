@@ -84,3 +84,28 @@ export function extractNextJsRouteHandlers(
       };
     });
 }
+
+export function normalizeEndpointMetadata(
+  endpoints: EndpointMetadata[]
+): EndpointMetadata[] {
+  const normalizedMap = new Map<string, EndpointMetadata>();
+
+  for (const endpoint of endpoints) {
+    const normalizedPath = endpoint.routePath.startsWith("/")
+      ? endpoint.routePath
+      : `/${endpoint.routePath}`;
+    const normalizedMethod = endpoint.method.toUpperCase();
+    const normalizedEndpoint: EndpointMetadata = {
+      ...endpoint,
+      routePath: normalizedPath,
+      method: normalizedMethod,
+      id: `${endpoint.framework}:${endpoint.filePath}:${normalizedMethod}:${normalizedPath}`
+    };
+
+    normalizedMap.set(normalizedEndpoint.id, normalizedEndpoint);
+  }
+
+  return Array.from(normalizedMap.values()).sort((left, right) =>
+    left.id.localeCompare(right.id)
+  );
+}
