@@ -41,3 +41,19 @@ export function generateRequestFlowSummary(
     ]
   };
 }
+
+export function generateRepositoryOverviewSummary(
+  repositoryRoot: string,
+  modules: ModuleMetadata[],
+  stack: StackDetectionResult
+): SummarySection {
+  return {
+    title: "Repository Overview",
+    bullets: [
+      `Repository root analyzed locally: ${repositoryRoot}.`,
+      `Detected languages: ${stack.languages.join(", ") || "none"}.`,
+      `Detected frameworks: ${stack.frameworks.join(", ") || "none"}.`,
+      `Modules available for inspection: ${modules.length}.`
+    ]
+  };
+}
