@@ -24,3 +24,20 @@ export function generateArchitectureSummary(
     ]
   };
 }
+
+export function generateRequestFlowSummary(
+  modules: ModuleMetadata[],
+  endpoints: EndpointMetadata[]
+): SummarySection {
+  const routeModules = modules.filter((module) => module.type === "route").length;
+  const serviceModules = modules.filter((module) => module.type === "service").length;
+
+  return {
+    title: "Request Flow Summary",
+    bullets: [
+      `Route-oriented modules detected: ${routeModules}.`,
+      `Service-oriented modules detected: ${serviceModules}.`,
+      `Normalized endpoints available for flow mapping: ${endpoints.length}.`
+    ]
+  };
+}
