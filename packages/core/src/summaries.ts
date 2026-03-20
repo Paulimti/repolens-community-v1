@@ -57,3 +57,20 @@ export function generateRepositoryOverviewSummary(
     ]
   };
 }
+
+export function generateOnboardingGuide(
+  modules: ModuleMetadata[],
+  endpoints: EndpointMetadata[]
+): SummarySection {
+  const firstModule = modules.at(0)?.filePath ?? "no source modules detected";
+  const firstEndpoint = endpoints.at(0)?.routePath ?? "no API endpoints detected";
+
+  return {
+    title: "Onboarding Guide",
+    bullets: [
+      `Start by reading ${firstModule}.`,
+      `Inspect the first endpoint path: ${firstEndpoint}.`,
+      "Use the dependency graph to trace how modules are connected."
+    ]
+  };
+}
