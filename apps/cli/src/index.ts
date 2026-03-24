@@ -10,7 +10,7 @@ function printTerminalSummary(result: Awaited<ReturnType<typeof analyzeLocalRepo
 }
 
 export async function runCli(argv: string[]): Promise<number> {
-  const [command, repositoryPath] = argv;
+  const [command, repositoryPath, ...flags] = argv;
 
   if (!command) {
     console.log("RepoLens Community Edition");
@@ -20,6 +20,11 @@ export async function runCli(argv: string[]): Promise<number> {
 
   if (command === "analyze" && repositoryPath) {
     const result = await analyzeLocalRepository(repositoryPath);
+
+    if (flags.includes("--json")) {
+      console.log(JSON.stringify(result, null, 2));
+      return 0;
+    }
 
     printTerminalSummary(result);
     return 0;
