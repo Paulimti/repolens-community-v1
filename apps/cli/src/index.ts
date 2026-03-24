@@ -2,6 +2,13 @@
 
 import { analyzeLocalRepository } from "@repolens/core";
 
+function printTerminalSummary(result: Awaited<ReturnType<typeof analyzeLocalRepository>>): void {
+  console.log(`Repository: ${result.repositoryRoot}`);
+  console.log(`Frameworks: ${result.stack.frameworks.join(", ") || "none"}`);
+  console.log(`Modules: ${result.modules.length}`);
+  console.log(`Endpoints: ${result.endpoints.length}`);
+}
+
 export async function runCli(argv: string[]): Promise<number> {
   const [command, repositoryPath] = argv;
 
@@ -14,7 +21,7 @@ export async function runCli(argv: string[]): Promise<number> {
   if (command === "analyze" && repositoryPath) {
     const result = await analyzeLocalRepository(repositoryPath);
 
-    console.log(`Analyzed ${result.repositoryRoot}`);
+    printTerminalSummary(result);
     return 0;
   }
 
