@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import { stat } from "node:fs/promises";
+
 import { analyzeLocalRepository } from "@repolens/core";
 
 function printTerminalSummary(result: Awaited<ReturnType<typeof analyzeLocalRepository>>): void {
@@ -19,6 +21,13 @@ export async function runCli(argv: string[]): Promise<number> {
   }
 
   if (command === "analyze" && repositoryPath) {
+    const repositoryStats = await stat(repositoryPath).catch(() => null);
+
+    if (!repositoryStats?.isDirectory()) {
+      console.error(`Invalid repository path: ${repositoryPath}`);
+      return 1;
+    }
+
     const result = await analyzeLocalRepository(repositoryPath);
 
     if (flags.includes("--json")) {
