@@ -37,3 +37,18 @@ node apps/cli/dist/index.js analyze .
 node apps/cli/dist/index.js analyze ./examples/express-basic
 node apps/cli/dist/index.js analyze ./examples/nextjs-basic --json
 ```
+
+## Open Core Boundaries
+
+This repository does not include any hosted or SaaS-only features.
+
+Not included in the community edition:
+
+- repo chat
+- embeddings or vector search
+- private repository access
+- GitHub OAuth
+- team workspace features
+- branch comparison
+- premium report export workflows
+- billing, subscriptions, or usage-limit logic
