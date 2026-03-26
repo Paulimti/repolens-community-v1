@@ -29,3 +29,11 @@ node apps/cli/dist/index.js analyze .
 
 - JavaScript
 - TypeScript
+
+## CLI Examples
+
+```bash
+node apps/cli/dist/index.js analyze .
+node apps/cli/dist/index.js analyze ./examples/express-basic
+node apps/cli/dist/index.js analyze ./examples/nextjs-basic --json
+```
