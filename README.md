@@ -16,3 +16,16 @@ RepoLens Community Edition analyzes a local repository path and produces determi
 - API extraction
 - architecture summary
 - CLI analysis
+
+## Install And Run
+
+```bash
+npm install
+npm run build
+node apps/cli/dist/index.js analyze .
+```
+
+## Supported Languages
+
+- JavaScript
+- TypeScript
