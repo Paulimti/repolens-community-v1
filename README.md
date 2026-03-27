@@ -52,3 +52,7 @@ Not included in the community edition:
 - branch comparison
 - premium report export workflows
 - billing, subscriptions, or usage-limit logic
+
+## Package Architecture
+
+See `docs/architecture.md` for the package-level architecture overview.
