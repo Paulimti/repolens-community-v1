@@ -56,3 +56,8 @@ Not included in the community edition:
 ## Package Architecture
 
 See `docs/architecture.md` for the package-level architecture overview.
+
+## Examples
+
+- `examples/express-basic`: small Express router example
+- `examples/nextjs-basic`: small Next.js app router example
