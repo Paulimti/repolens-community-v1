@@ -35,7 +35,7 @@ export async function scanRepositoryFiles(rootPath: string): Promise<string[]> {
   const files = await walkDirectory(absoluteRootPath, absoluteRootPath);
 
   return files
-    .map((filePath) => path.relative(absoluteRootPath, filePath))
+    .map((filePath) => path.relative(absoluteRootPath, filePath).replaceAll("\\", "/"))
     .sort((left, right) => left.localeCompare(right));
 }
 
