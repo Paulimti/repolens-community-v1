@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { stat } from "node:fs/promises";
+import { pathToFileURL } from "node:url";
 
 import { analyzeLocalRepository } from "@repolens/core";
 
@@ -43,5 +44,7 @@ export async function runCli(argv: string[]): Promise<number> {
   return 1;
 }
 
-const exitCode = await runCli(process.argv.slice(2));
-process.exitCode = exitCode;
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
+  const exitCode = await runCli(process.argv.slice(2));
+  process.exitCode = exitCode;
+}
