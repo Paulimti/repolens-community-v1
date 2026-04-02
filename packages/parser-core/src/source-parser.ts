@@ -1,4 +1,5 @@
 import path from "node:path";
+import { existsSync } from "node:fs";
 
 import { Project, type SourceFile } from "ts-morph";
 
@@ -16,13 +17,25 @@ export function isSupportedSourceFile(filePath: string): boolean {
 }
 
 export function createSourceProject(rootPath: string): Project {
+  const tsConfigFilePath = path.join(rootPath, "tsconfig.json");
+
+  if (existsSync(tsConfigFilePath)) {
+    return new Project({
+      skipAddingFilesFromTsConfig: true,
+      compilerOptions: {
+        allowJs: true,
+        skipLibCheck: true
+      },
+      tsConfigFilePath,
+      useInMemoryFileSystem: false
+    });
+  }
+
   return new Project({
-    skipAddingFilesFromTsConfig: true,
     compilerOptions: {
       allowJs: true,
       skipLibCheck: true
     },
-    tsConfigFilePath: path.join(rootPath, "tsconfig.json"),
     useInMemoryFileSystem: false
   });
 }
@@ -38,5 +51,9 @@ export function loadSourceFile(
 
   const absolutePath = path.join(rootPath, repositoryPath);
 
-  return project.addSourceFileAtPathIfExists(absolutePath);
+  try {
+    return project.addSourceFileAtPathIfExists(absolutePath);
+  } catch {
+    return undefined;
+  }
 }
