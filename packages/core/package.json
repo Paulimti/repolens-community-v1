@@ -3,12 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "description": "End-to-end local repository analysis orchestration for RepoLens Community Edition.",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "@repolens/graph-core": "0.1.0",
     "@repolens/parser-core": "0.1.0",
     "@repolens/shared-types": "0.1.0"
   },
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   }
 }

@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "description": "Local-first CLI application for RepoLens Community Edition.",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@repolens/core": "0.1.0"
   },
   "bin": {
     "repolens": "./dist/index.js"
-  },
-  "exports": {
-    ".": "./dist/index.js"
   }
 }
