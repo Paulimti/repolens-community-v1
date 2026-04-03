@@ -8,6 +8,8 @@
 - `packages/core`: orchestration and human-readable summaries
 - `apps/cli`: local repository analysis commands
 
+These are workspace package boundaries for the open-source repository. The library packages define the public code organization of the community edition, while `apps/cli` remains a local CLI application boundary rather than a hosted product surface.
+
 ## Flow
 
 1. `parser-core` scans a local repository and collects file metadata.
