@@ -1,59 +1,43 @@
-import path from "node:path";
-import { existsSync } from "node:fs";
+import { Project } from "ts-morph";
+import type { ScannedRepositoryFile } from "@repolens/shared-types";
 
-import { Project, type SourceFile } from "ts-morph";
-
-const SUPPORTED_SOURCE_EXTENSIONS = new Set([
+export const SUPPORTED_SOURCE_FILE_EXTENSIONS = new Set([
   ".js",
   ".jsx",
   ".ts",
   ".tsx",
   ".mjs",
-  ".cjs"
+  ".cjs",
+  ".mts",
+  ".cts"
 ]);
 
-export function isSupportedSourceFile(filePath: string): boolean {
-  return SUPPORTED_SOURCE_EXTENSIONS.has(path.extname(filePath));
+export type RepositorySourceFile = {
+  path: string;
+  absolutePath: string;
+};
+
+export type RepositorySourceParser = {
+  project: Project;
+  sourceFiles: RepositorySourceFile[];
+};
+
+export function isSupportedSourceFile(file: ScannedRepositoryFile) {
+  return (
+    file.extension !== null &&
+    SUPPORTED_SOURCE_FILE_EXTENSIONS.has(file.extension)
+  );
 }
 
-export function createSourceProject(rootPath: string): Project {
-  const tsConfigFilePath = path.join(rootPath, "tsconfig.json");
-
-  if (existsSync(tsConfigFilePath)) {
-    return new Project({
-      skipAddingFilesFromTsConfig: true,
-      compilerOptions: {
-        allowJs: true,
-        skipLibCheck: true
-      },
-      tsConfigFilePath,
-      useInMemoryFileSystem: false
-    });
-  }
-
-  return new Project({
-    compilerOptions: {
-      allowJs: true,
-      skipLibCheck: true
-    },
-    useInMemoryFileSystem: false
-  });
-}
-
-export function loadSourceFile(
-  project: Project,
+export function createRepositorySourceParser(
   rootPath: string,
-  repositoryPath: string
-): SourceFile | undefined {
-  if (!isSupportedSourceFile(repositoryPath)) {
-    return undefined;
-  }
+  files: ScannedRepositoryFile[]
+): RepositorySourceParser {
+  void rootPath;
+  void files;
 
-  const absolutePath = path.join(rootPath, repositoryPath);
-
-  try {
-    return project.addSourceFileAtPathIfExists(absolutePath);
-  } catch {
-    return undefined;
-  }
+  return {
+    project: new Project(),
+    sourceFiles: []
+  };
 }

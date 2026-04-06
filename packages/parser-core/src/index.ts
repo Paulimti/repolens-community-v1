@@ -1,8 +1,8 @@
-export * from "./api-analysis.js";
-export * from "./ignore.js";
-export * from "./module-detection.js";
-export * from "./package-json.js";
-export * from "./scanner.js";
-export * from "./source-analysis.js";
-export * from "./source-parser.js";
-export * from "./stack.js";
+export { detectStack } from "./detect-stack.js";
+export { scanRepositoryFiles } from "./scan-repository-files.js";
+export {
+  createRepositorySourceParser,
+  isSupportedSourceFile,
+  SUPPORTED_SOURCE_FILE_EXTENSIONS
+} from "./source-parser.js";
+export { extractSourceModuleMetadata } from "./extract-source-module-metadata.js";
