@@ -12,7 +12,8 @@
   "types": "./dist/index.d.ts",
   "dependencies": {
     "@repolens/parser-core": "0.1.0",
-    "@repolens/shared-types": "0.1.0"
+    "@repolens/shared-types": "0.1.0",
+    "ts-morph": "^25.0.1"
   },
   "exports": {
     ".": {
