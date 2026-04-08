@@ -6,7 +6,7 @@ Public open-source repository analysis engine and local CLI tooling.
 
 RepoLens Community Edition analyzes a local repository path and produces deterministic structural output for source files, stacks, modules, dependency relationships, API endpoints, and architecture summaries.
 
-This repository is the public community edition only. It focuses on local analysis workflows and does not include the hosted SaaS features from the private `repolens` repository.
+This repository is rebuilt from the extracted local analysis engine in the private `repolens` product. It focuses on community-safe local analysis workflows and does not include the hosted SaaS features from the private repository.
 
 ## Community Edition Features
 
@@ -19,12 +19,13 @@ This repository is the public community edition only. It focuses on local analys
 - architecture summary
 - CLI analysis
 
-## Install And Run
+## Quick Usage
 
 ```bash
 npm install
 npm run build
 node apps/cli/dist/index.js analyze .
+node apps/cli/dist/index.js analyze . --json
 ```
 
 The packages in `packages/*` are workspace packages used inside this repository. They are documented as public code boundaries, but this repo is currently set up for local development and local CLI usage rather than npm package publishing.
@@ -33,16 +34,6 @@ The packages in `packages/*` are workspace packages used inside this repository.
 
 - JavaScript
 - TypeScript
-
-## CLI Examples
-
-```bash
-node apps/cli/dist/index.js analyze .
-node apps/cli/dist/index.js analyze ./examples/express-basic
-node apps/cli/dist/index.js analyze ./examples/nextjs-basic --json
-```
-
-If you want a quick smoke test, run one of the example repositories above after `npm run build`.
 
 ## Open Core Boundaries
 
@@ -56,7 +47,7 @@ Not included in the community edition:
 - GitHub OAuth
 - team workspace features
 - branch comparison
-- premium report export workflows
+- premium report export workflows or hosted documentation delivery
 - billing, subscriptions, or usage-limit logic
 
 ## Package Architecture
