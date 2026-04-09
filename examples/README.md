@@ -9,12 +9,24 @@ npm run build
 node apps/cli/dist/index.js analyze ./examples/express-basic
 ```
 
+Expected signals:
+
+- Express detected in the stack
+- route modules extracted from `src/routes/users.ts`
+- two Express endpoints discovered for `/users`
+
 ## Run the Next.js example
 
 ```bash
 npm run build
 node apps/cli/dist/index.js analyze ./examples/nextjs-basic --json
 ```
+
+Expected signals:
+
+- Next.js and React detected in the stack
+- route modules extracted from the `app/` directory
+- one app-router endpoint discovered for `/api/health`
 
 ## Scope note
 
