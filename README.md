@@ -30,6 +30,8 @@ node apps/cli/dist/index.js analyze . --json
 
 The packages in `packages/*` are workspace packages used inside this repository. They are documented as public code boundaries, but this repo is currently set up for local development and local CLI usage rather than npm package publishing.
 
+See `docs/installation.md` for the full installation guide.
+
 ## Supported Languages
 
 - JavaScript
