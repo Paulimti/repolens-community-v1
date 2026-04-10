@@ -12,9 +12,10 @@ These are workspace package boundaries for the open-source repository. The libra
 
 ## Flow
 
-1. `parser-core` scans a local repository and collects file metadata.
-2. `parser-core` parses package metadata and supported source files.
-3. `parser-core` extracts modules, imports, exports, symbols, and endpoints.
-4. `graph-core` builds a normalized dependency graph from import relationships.
-5. `core` assembles summaries and the final analysis result.
-6. `apps/cli` renders terminal or JSON output for a local repository path.
+1. `parser-core/scan-repository-files` walks the local repository and applies ignore rules.
+2. `parser-core/detect-stack` infers stack signals from manifests and project structure.
+3. `parser-core/source-parser` and `extract-source-module-metadata` parse supported source files with `ts-morph`.
+4. `graph-core/detect-logical-modules` classifies source modules, then `build-module-dependencies` resolves internal edges.
+5. `graph-core/extract-express-routes` and `extract-nextjs-route-handlers` extract API endpoints.
+6. `core/analyze-repository` assembles the community analysis snapshot and generated documentation drafts.
+7. `apps/cli` exposes local path analysis in terminal and JSON forms.
