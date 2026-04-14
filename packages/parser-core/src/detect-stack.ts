@@ -25,8 +25,14 @@ async function readPackageManifest(
 ): Promise<PackageManifest | null> {
   try {
     const contents = await readFile(join(rootPath, relativePath), "utf8");
+    const normalizedContents = contents.replace(/^\uFEFF/, "");
+    const parsedValue = JSON.parse(normalizedContents) as unknown;
 
-    return JSON.parse(contents) as PackageManifest;
+    if (!parsedValue || typeof parsedValue !== "object") {
+      return null;
+    }
+
+    return parsedValue as PackageManifest;
   } catch {
     return null;
   }
