@@ -59,24 +59,28 @@ export function createRepositorySourceParser(
       target: ts.ScriptTarget.ES2022
     }
   });
-  const sourceFiles = files
-    .filter(isSupportedSourceFile)
-    .map((file) => ({
+  const sourceFiles: RepositorySourceFile[] = [];
+
+  for (const file of files.filter(isSupportedSourceFile)) {
+    const source = {
       path: file.path,
       absolutePath: join(rootPath, file.path)
-    }));
+    };
 
-  for (const file of sourceFiles) {
-    const existingSourceFile = project.addSourceFileAtPathIfExists(file.absolutePath);
+    try {
+      const existingSourceFile = project.addSourceFileAtPathIfExists(source.absolutePath);
 
-    if (existingSourceFile) {
+      if (!existingSourceFile) {
+        project.createSourceFile(source.absolutePath, "", {
+          overwrite: true,
+          scriptKind: getScriptKindForPath(source.path)
+        });
+      }
+
+      sourceFiles.push(source);
+    } catch {
       continue;
     }
-
-    project.createSourceFile(file.absolutePath, "", {
-        overwrite: true,
-        scriptKind: getScriptKindForPath(file.path)
-      });
   }
 
   return {

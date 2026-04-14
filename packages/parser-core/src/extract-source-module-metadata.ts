@@ -135,13 +135,19 @@ export function extractSourceModuleMetadata(
 ): ParsedSourceModuleMetadata[] {
   const parser = createRepositorySourceParser(rootPath, files);
 
-  return parser.sourceFiles.map((file) => {
-    const sourceFile = parser.project.getSourceFileOrThrow(file.absolutePath);
+  return parser.sourceFiles.flatMap((file) => {
+    try {
+      const sourceFile = parser.project.getSourceFileOrThrow(file.absolutePath);
 
-    return {
-      path: file.path,
-      imports: extractImportsFromSourceFile(sourceFile),
-      exports: extractExportsFromSourceFile(sourceFile)
-    };
+      return [
+        {
+          path: file.path,
+          imports: extractImportsFromSourceFile(sourceFile),
+          exports: extractExportsFromSourceFile(sourceFile)
+        }
+      ];
+    } catch {
+      return [];
+    }
   });
 }
