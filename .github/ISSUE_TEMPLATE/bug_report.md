@@ -25,3 +25,4 @@ Describe what you expected to happen.
 - OS:
 - Node.js version:
 - RepoLens command:
+- Repository path analyzed locally:
