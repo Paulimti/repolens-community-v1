@@ -1,64 +1,187 @@
 # RepoLens Community Edition
 
-Public open-source repository analysis engine and local CLI tooling.
+Open-source repository analysis for understanding a local codebase fast.
 
-## What It Does
+RepoLens Community Edition helps you inspect a repository from the command line and turn source code into a clear structural snapshot. It scans files, detects the stack, parses source code, extracts modules and API routes, builds dependency relationships, and generates architecture-oriented summaries.
 
-RepoLens Community Edition analyzes a local repository path and produces deterministic structural output for source files, stacks, modules, dependency relationships, API endpoints, and architecture summaries.
+## Feature Highlights
 
-This repository is rebuilt from the extracted local analysis engine in the private `repolens` product. It focuses on community-safe local analysis workflows and does not include the hosted SaaS features from the private repository.
+- Analyze any local repository path from the CLI
+- Detect common stack signals from project metadata and structure
+- Parse JavaScript and TypeScript source with AST-based analysis
+- Extract logical modules and source-level metadata
+- Build normalized dependency graph relationships
+- Discover API endpoints from supported framework patterns
+- Generate architecture and onboarding-oriented summary data
+- Keep analysis local-first with no hosted dependency required
 
-## Community Edition Features
+## Installation
 
-- local repository scanning
-- stack detection
-- AST parsing
-- module extraction
-- dependency graph generation
-- API extraction
-- architecture summary
-- CLI analysis
+Requirements:
 
-## Quick Usage
+- Node.js 20 or later
+- npm 10 or later
+
+Install dependencies and build the workspace:
 
 ```bash
 npm install
 npm run build
+```
+
+Additional setup notes are available in [docs/installation.md](docs/installation.md).
+
+## Quick Start
+
+Analyze the current repository:
+
+```bash
 node apps/cli/dist/index.js analyze .
+```
+
+Analyze another local repository:
+
+```bash
+node apps/cli/dist/index.js analyze "E:\path\to\other-repo"
+```
+
+Return the full analysis result as JSON:
+
+```bash
 node apps/cli/dist/index.js analyze . --json
 ```
 
-The packages in `packages/*` are workspace packages used inside this repository. They are documented as public code boundaries, but this repo is currently set up for local development and local CLI usage rather than npm package publishing.
+## CLI Usage Examples
 
-See `docs/installation.md` for the full installation guide.
+Current command surface:
 
-## Supported Languages
+```bash
+node apps/cli/dist/index.js analyze <repository-path>
+node apps/cli/dist/index.js analyze <repository-path> --json
+```
+
+Analyze the included examples:
+
+```bash
+node apps/cli/dist/index.js analyze ./examples/express-basic
+node apps/cli/dist/index.js analyze ./examples/nextjs-basic
+node apps/cli/dist/index.js analyze ./examples/nextjs-basic --json
+```
+
+If the path is invalid, the CLI returns an error:
+
+```bash
+node apps/cli/dist/index.js analyze ./does-not-exist
+```
+
+## Sample Output
+
+Example summary output for `./examples/express-basic`:
+
+```text
+Repository: express-basic
+Scanned files: 3
+Stack: JavaScript, TypeScript, Node.js, Express
+Modules: 1
+Dependencies: 0
+API endpoints: 2
+```
+
+Example summary output for `./examples/nextjs-basic`:
+
+```text
+Repository: nextjs-basic
+Scanned files: 5
+Stack: JavaScript, TypeScript, Node.js, Next.js, React
+Modules: 3
+Dependencies: 0
+API endpoints: 1
+```
+
+Use `--json` when you want the full structured analysis result for tooling, debugging, or downstream processing.
+
+## Supported Frameworks And Languages
+
+Current analysis support in this public repository focuses on:
 
 - JavaScript
 - TypeScript
+- Node.js package metadata
+- Express router definitions
+- Next.js app router route handlers
 
-## Open Core Boundaries
+The community edition is intentionally conservative. This README only lists support that is implemented in the current codebase.
 
-This repository does not include any hosted or SaaS-only features.
+## Community Edition Vs Cloud Edition
 
-Not included in the community edition:
+This repository contains only the Community Edition engine and local developer tooling.
 
-- repo chat
-- embeddings or vector search
-- private repository access
-- GitHub OAuth
-- team workspace features
-- branch comparison
-- premium report export workflows or hosted documentation delivery
-- billing, subscriptions, or usage-limit logic
+| Area | Community Edition | Cloud Edition |
+| --- | --- | --- |
+| Repository analysis | Local CLI analysis of local paths | Private product surface, not included here |
+| Source parsing and graphing | Included | Included privately, not documented here |
+| API extraction | Included for supported local patterns | Private product surface, not included here |
+| Hosted access to private repositories | Not included | Cloud-only |
+| Authentication and OAuth | Not included | Cloud-only |
+| Collaboration and team workflows | Not included | Cloud-only |
+| Billing and subscriptions | Not included | Cloud-only |
 
-## Package Architecture
+If a feature depends on hosted services, private repository access, account management, or team collaboration, it does not belong in this public repository.
 
-See `docs/architecture.md` for the package-level architecture overview.
+## Repository Structure
 
-## Examples
+```text
+packages/shared-types  Reusable analysis contracts and public result types
+packages/parser-core   Scanning, stack detection, AST parsing, extraction helpers
+packages/graph-core    Dependency graph and architecture relationship utilities
+packages/core          End-to-end local analysis pipeline and summaries
+apps/cli               Local command-line interface
+examples               Small sample repositories for trying the analyzer
+docs                   Installation, architecture, and roadmap documentation
+```
 
-- `examples/express-basic`: small Express router example
-- `examples/nextjs-basic`: small Next.js app router example
+For a package-level overview, see [docs/architecture.md](docs/architecture.md).
 
-See `examples/README.md` for example-specific usage notes.
+## Local Development
+
+Useful workspace commands:
+
+```bash
+npm run lint
+npm run build
+npm test
+```
+
+Common workflow:
+
+1. Install dependencies with `npm install`.
+2. Build the workspace with `npm run build`.
+3. Run the CLI against a local repository path.
+4. Run `npm test` before sending changes.
+
+## Roadmap
+
+RepoLens Community Edition is focused on improving the local analysis engine and its public developer experience.
+
+Current roadmap themes:
+
+- better local repository scanning and ignore handling
+- stronger stack and framework detection
+- broader parser coverage for supported JavaScript and TypeScript patterns
+- richer module, graph, and architecture summaries
+- better examples, tests, and contributor docs
+
+See [docs/roadmap.md](docs/roadmap.md) for the maintained roadmap and explicit non-goals.
+
+## Contributing
+
+Contributions are welcome if they keep the project local-first, analysis-focused, and community-safe.
+
+Before opening a pull request:
+
+- keep changes small and review-friendly
+- avoid introducing SaaS-only abstractions or features
+- run `npm run lint`, `npm run build`, and `npm test`
+- update docs or examples when behavior changes
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and scope guardrails.
