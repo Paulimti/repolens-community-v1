@@ -100,6 +100,20 @@ API endpoints: 1
 
 Use `--json` when you want the full structured analysis result for tooling, debugging, or downstream processing.
 
+## Screenshots
+
+CLI output:
+
+<!-- Add screenshot at docs/images/cli-output.png -->
+
+Dependency graph:
+
+<!-- Add screenshot at docs/images/dependency-graph.png -->
+
+Architecture summary:
+
+<!-- Add screenshot at docs/images/architecture-summary.png -->
+
 ## Supported Frameworks And Languages
 
 Current analysis support in this public repository focuses on:
