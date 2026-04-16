@@ -1,33 +1,84 @@
-# Example Repositories
+# Examples
 
-These example projects are small local fixtures for trying the community edition CLI and for understanding the supported analysis surface.
+This folder contains small local repositories for trying RepoLens Community Edition without needing another project on disk.
 
-## Run the Express example
+The examples are intentionally minimal. They exist to demonstrate the public analysis engine only:
+
+- repository scanning
+- stack detection
+- AST-driven source analysis
+- module extraction
+- dependency graph generation
+- API endpoint extraction
+
+## Before You Run Them
+
+Build the CLI from the workspace root:
 
 ```bash
+npm install
 npm run build
+```
+
+All commands below should be run from the repository root.
+
+## Included Example Repositories
+
+- [Express example](express-basic/README.md)
+- [Next.js example](nextjs-basic/README.md)
+
+## Express Example
+
+Analyze the Express fixture:
+
+```bash
 node apps/cli/dist/index.js analyze ./examples/express-basic
 ```
 
-Expected signals:
+What you should see:
 
-- Express detected in the stack
-- route modules extracted from `src/routes/users.ts`
-- two Express endpoints discovered for `/users`
+- Express detected in the repository stack
+- route-oriented source modules discovered under `src/routes`
+- Express endpoints extracted for `/users`
+- dependency relationships based on local imports
 
-## Run the Next.js example
+Example output:
+
+- [Express output](express-basic/analysis-output.md)
+
+## Next.js Example
+
+Analyze the Next.js fixture:
 
 ```bash
-npm run build
+node apps/cli/dist/index.js analyze ./examples/nextjs-basic
+```
+
+Use JSON output if you want the full structured result:
+
+```bash
 node apps/cli/dist/index.js analyze ./examples/nextjs-basic --json
 ```
 
-Expected signals:
+What you should see:
 
-- Next.js and React detected in the stack
-- route modules extracted from the `app/` directory
-- one app-router endpoint discovered for `/api/health`
+- Next.js and React detected in the repository stack
+- app-router style files recognized from the `app/` directory
+- API route handler metadata extracted for `/api/health`
+- source modules and dependency edges derived from parsed files
 
-## Scope note
+Example output:
 
-The examples are intentionally local and minimal. They are meant to demonstrate repository scanning, stack detection, API extraction, and graph-friendly source analysis without any hosted services.
+- [Next.js output](nextjs-basic/analysis-output.md)
+
+## Using Your Own Repository
+
+Once the examples work, point the CLI at any local repository path:
+
+```bash
+node apps/cli/dist/index.js analyze "E:\path\to\your-repository"
+```
+
+## Scope Reminder
+
+These examples are only for the community edition's local analysis flow. They do not demonstrate any cloud, team, auth, billing, or other SaaS-only features because those are intentionally excluded from this public repository.

@@ -68,6 +68,8 @@ node apps/cli/dist/index.js analyze ./examples/nextjs-basic
 node apps/cli/dist/index.js analyze ./examples/nextjs-basic --json
 ```
 
+Browse the [examples directory](examples/) or start with [docs/examples.md](docs/examples.md) for fixture-specific usage notes and sample output.
+
 If the path is invalid, the CLI returns an error:
 
 ```bash
@@ -199,3 +201,4 @@ Before opening a pull request:
 - update docs or examples when behavior changes
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and scope guardrails.
+
