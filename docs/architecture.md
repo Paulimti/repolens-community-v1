@@ -1,21 +1,37 @@
-# Public Package Architecture
+# Architecture
 
-## Packages
+RepoLens Community Edition is organized as a small workspace of focused packages. The public repository keeps the analysis engine local-first and separates parsing, graph construction, orchestration, and CLI concerns.
 
-- `packages/shared-types`: reusable public analysis contracts
-- `packages/parser-core`: repository scanning, stack detection, AST parsing, module and API extraction
-- `packages/graph-core`: dependency edge generation and graph normalization
-- `packages/core`: orchestration and human-readable summaries
-- `apps/cli`: local repository analysis commands
+## Package Boundaries
 
-These are workspace package boundaries for the open-source repository. The library packages define the public code organization of the community edition, while `apps/cli` remains a local CLI application boundary rather than a hosted product surface.
+- `packages/shared-types`: reusable analysis contracts, result types, and normalized metadata shared across packages
+- `packages/parser-core`: repository scanning, ignore handling, stack detection, AST parsing, import and export extraction, and source module metadata extraction
+- `packages/graph-core`: logical module detection, dependency edge generation, and API endpoint extraction for supported frameworks
+- `packages/core`: end-to-end repository analysis orchestration plus summary-oriented generated documentation data
+- `apps/cli`: command-line entrypoint for analyzing a local repository path and printing either a terminal summary or JSON output
 
-## Flow
+## Analysis Pipeline
 
-1. `parser-core/scan-repository-files` walks the local repository and applies ignore rules.
-2. `parser-core/detect-stack` infers stack signals from manifests and project structure.
-3. `parser-core/source-parser` and `extract-source-module-metadata` parse supported source files with `ts-morph`.
-4. `graph-core/detect-logical-modules` classifies source modules, then `build-module-dependencies` resolves internal edges.
-5. `graph-core/extract-express-routes` and `extract-nextjs-route-handlers` extract API endpoints.
-6. `core/analyze-repository` assembles the community analysis snapshot and generated documentation drafts.
-7. `apps/cli` exposes local path analysis in terminal and JSON forms.
+1. The CLI receives a local repository path and resolves it to an absolute path.
+2. `parser-core` scans files from that root while applying ignore rules and supported-file filtering.
+3. `parser-core` detects stack signals from manifests, config files, and project structure.
+4. `parser-core` parses supported JavaScript and TypeScript files and extracts import, export, and symbol metadata.
+5. `graph-core` classifies logical modules and builds dependency edges from internal import relationships.
+6. `graph-core` extracts API endpoints from supported Express router patterns and Next.js app-router route handlers.
+7. `core` assembles the normalized repository analysis result and generates summary-style documentation artifacts.
+8. The CLI prints a concise summary or emits the full JSON result.
+
+## Current Outputs
+
+The current community edition analysis result includes:
+
+- scanned files
+- detected stack entries
+- detected modules
+- module dependency edges
+- extracted API endpoints
+- generated project overview, onboarding guide, and architecture summary content
+
+## Scope Notes
+
+This architecture is intentionally limited to public community-edition capabilities. It does not include hosted access, private-repository integrations, authentication flows, collaboration features, billing, or other cloud-only concerns.
