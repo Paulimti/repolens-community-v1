@@ -2,14 +2,23 @@
 
 Describe the change in a few sentences.
 
+## What Changed
+
+- 
+- 
+
 ## Validation
 
 - [ ] `npm run lint`
 - [ ] `npm run build`
 - [ ] `npm test`
 
-## Scope
+## Community Scope Check
 
-- [ ] This change stays within the RepoLens Community Edition feature boundaries
+- [ ] This change stays within RepoLens Community Edition scope
 - [ ] No SaaS-only features were introduced
-- [ ] The change supports local repository analysis rather than hosted product behavior
+- [ ] Docs or examples were updated if user-facing behavior changed
+
+## Notes For Reviewers
+
+Anything specific you would like reviewed closely?

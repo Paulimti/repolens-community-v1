@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an analysis-focused improvement for the community edition
+about: Suggest a useful improvement for RepoLens Community Edition
 title: "feat: "
 labels: enhancement
 assignees: ""
@@ -8,16 +8,20 @@ assignees: ""
 
 ## Problem
 
-Describe the local analysis problem you want to solve.
+What local analysis problem are you trying to solve?
 
-## Proposed Solution
+## Proposed Behavior
 
-Describe the behavior you would like to see.
+What would you like RepoLens Community Edition to do?
+
+## Expected Outcome
+
+How would this help you when analyzing a repository?
 
 ## Scope Check
 
-Confirm that the request does not require SaaS-only features such as repo chat, private repository access, branch comparison, or billing logic.
+Please confirm this request stays within the public community edition and does not require hosted auth, private repository access, team collaboration, billing, or other cloud-only features.
 
-## Extracted Core Fit
+## Additional Context
 
-Explain how this request fits the local analysis engine that was extracted into the community edition.
+Links, examples, or sample repositories are welcome.

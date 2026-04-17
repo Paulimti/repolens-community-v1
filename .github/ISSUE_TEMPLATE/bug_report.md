@@ -8,7 +8,7 @@ assignees: ""
 
 ## Summary
 
-Describe the bug clearly.
+Describe the bug in a few sentences.
 
 ## Steps To Reproduce
 
@@ -18,11 +18,19 @@ Describe the bug clearly.
 
 ## Expected Behavior
 
-Describe what you expected to happen.
+What did you expect to happen?
+
+## Actual Behavior
+
+What happened instead?
 
 ## Environment
 
 - OS:
 - Node.js version:
 - RepoLens command:
-- Repository path analyzed locally:
+- Repository path or example analyzed:
+
+## Notes
+
+Add logs, screenshots, or a minimal reproduction if they help.
