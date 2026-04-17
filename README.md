@@ -187,7 +187,7 @@ Current roadmap themes:
 - richer module, graph, and architecture summaries
 - better examples, tests, and contributor docs
 
-See [docs/roadmap.md](docs/roadmap.md) for the maintained roadmap and explicit non-goals.
+See [ROADMAP.md](ROADMAP.md) for the maintained roadmap and explicit non-goals.
 
 ## Contributing
 
@@ -201,4 +201,5 @@ Before opening a pull request:
 - update docs or examples when behavior changes
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and scope guardrails.
+
 
