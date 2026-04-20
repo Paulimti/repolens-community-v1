@@ -7,10 +7,30 @@ coverage
 .env.*
 !.env.example
 generated
+
+# Package build output
 apps/*/dist
 apps/*/node_modules
 packages/*/dist
 packages/*/node_modules
 apps/*/.turbo
 packages/*/.turbo
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs and local caches
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.eslintcache
+.cache/
+tmp/
+temp/
+
 AGENTS.md
