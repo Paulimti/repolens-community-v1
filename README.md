@@ -1,5 +1,10 @@
 # RepoLens Community Edition
 
+[![License](https://img.shields.io/github/license/mohosin2126/repolens-community?label=license)](LICENSE)
+
+Workspace version: `0.1.0`  
+Distribution: source repository and local CLI workspace, not a published npm package
+
 Open-source repository analysis for understanding a local codebase fast.
 
 RepoLens Community Edition helps you inspect a repository from the command line and turn source code into a clear structural snapshot. It scans files, detects the stack, parses source code, extracts modules and API routes, builds dependency relationships, and generates architecture-oriented summaries.
@@ -201,5 +206,3 @@ Before opening a pull request:
 - update docs or examples when behavior changes
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and scope guardrails.
-
-
