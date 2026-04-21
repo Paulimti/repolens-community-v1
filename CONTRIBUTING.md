@@ -39,10 +39,18 @@ npm run lint
 npm test
 ```
 
+Useful development scripts:
+
+- `npm run build` compiles the workspace once
+- `npm run dev` watches TypeScript builds while you work
+- `npm run lint` checks the repository with ESLint
+- `npm test` runs the Vitest suite
+- `npm run analyze -- <path>` runs the local CLI after the workspace has been built
+
 Try the CLI locally:
 
 ```bash
-node apps/cli/dist/index.js analyze .
+npm run analyze -- .
 ```
 
 ## Coding Expectations
@@ -82,8 +90,8 @@ Examples:
 
 Before opening a pull request:
 
-1. run `npm run lint`
-2. run `npm run build`
+1. run `npm run build`
+2. run `npm run lint`
 3. run `npm test`
 4. verify the change stays within Community Edition scope
 5. update docs or examples if the behavior changed

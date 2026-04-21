@@ -6,8 +6,10 @@
   "packageManager": "npm@11.5.2",
   "scripts": {
     "build": "tsc -b --force",
+    "dev": "tsc -b --watch",
     "lint": "eslint .",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "analyze": "node apps/cli/dist/index.js analyze"
   },
   "workspaces": [
     "apps/*",

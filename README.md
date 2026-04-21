@@ -34,6 +34,14 @@ npm install
 npm run build
 ```
 
+Useful workspace scripts:
+
+- `npm run build` compiles the workspace once
+- `npm run dev` watches TypeScript builds during development
+- `npm run lint` runs ESLint across the repository
+- `npm test` runs the Vitest suite
+- `npm run analyze -- <path>` runs the local CLI after the workspace has been built
+
 Additional setup notes are available in [docs/installation.md](docs/installation.md).
 
 ## Quick Start
@@ -41,36 +49,42 @@ Additional setup notes are available in [docs/installation.md](docs/installation
 Analyze the current repository:
 
 ```bash
-node apps/cli/dist/index.js analyze .
+npm run analyze -- .
 ```
 
 Analyze another local repository:
 
 ```bash
-node apps/cli/dist/index.js analyze "E:\path\to\other-repo"
+npm run analyze -- "E:\path\to\other-repo"
 ```
 
 Return the full analysis result as JSON:
 
 ```bash
-node apps/cli/dist/index.js analyze . --json
+npm run analyze -- . --json
 ```
 
 ## CLI Usage Examples
 
-Current command surface:
+Recommended workspace command:
+
+```bash
+npm run analyze -- <repository-path>
+npm run analyze -- <repository-path> --json
+```
+
+Underlying CLI command:
 
 ```bash
 node apps/cli/dist/index.js analyze <repository-path>
-node apps/cli/dist/index.js analyze <repository-path> --json
 ```
 
 Analyze the included examples:
 
 ```bash
-node apps/cli/dist/index.js analyze ./examples/express-basic
-node apps/cli/dist/index.js analyze ./examples/nextjs-basic
-node apps/cli/dist/index.js analyze ./examples/nextjs-basic --json
+npm run analyze -- ./examples/express-basic
+npm run analyze -- ./examples/nextjs-basic
+npm run analyze -- ./examples/nextjs-basic --json
 ```
 
 Browse the [examples directory](examples/) or start with [docs/examples.md](docs/examples.md) for fixture-specific usage notes and sample output.
@@ -78,7 +92,7 @@ Browse the [examples directory](examples/) or start with [docs/examples.md](docs
 If the path is invalid, the CLI returns an error:
 
 ```bash
-node apps/cli/dist/index.js analyze ./does-not-exist
+npm run analyze -- ./does-not-exist
 ```
 
 ## Sample Output
@@ -158,7 +172,7 @@ packages/graph-core    Dependency graph and architecture relationship utilities
 packages/core          End-to-end local analysis pipeline and summaries
 apps/cli               Local command-line interface
 examples               Small sample repositories for trying the analyzer
-docs                   Installation, architecture, and roadmap documentation
+docs                   Installation, architecture, CLI, examples, and roadmap documentation
 ```
 
 For a package-level overview, see [docs/architecture.md](docs/architecture.md).
@@ -168,17 +182,20 @@ For a package-level overview, see [docs/architecture.md](docs/architecture.md).
 Useful workspace commands:
 
 ```bash
-npm run lint
 npm run build
+npm run dev
+npm run lint
 npm test
+npm run analyze -- .
 ```
 
 Common workflow:
 
 1. Install dependencies with `npm install`.
 2. Build the workspace with `npm run build`.
-3. Run the CLI against a local repository path.
-4. Run `npm test` before sending changes.
+3. Use `npm run dev` if you want TypeScript builds to keep watching while you work.
+4. Run `npm run analyze -- <path>` against a local repository.
+5. Run `npm run lint` and `npm test` before sending changes.
 
 ## Roadmap
 
@@ -202,7 +219,7 @@ Before opening a pull request:
 
 - keep changes small and review-friendly
 - avoid introducing SaaS-only abstractions or features
-- run `npm run lint`, `npm run build`, and `npm test`
+- run `npm run build`, `npm run lint`, and `npm test`
 - update docs or examples when behavior changes
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and scope guardrails.
