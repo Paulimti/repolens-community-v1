@@ -4,9 +4,12 @@ import { stat } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-import { analyzeRepository } from "@repolens/core";
+import {
+  analyzeRepository,
+  type RepositoryAnalysisResult
+} from "@repolens/core";
 
-function printSummary(result: Awaited<ReturnType<typeof analyzeRepository>>) {
+function printSummary(result: RepositoryAnalysisResult) {
   console.log(`Repository: ${result.documentationMetadata.repositoryFullName}`);
   console.log(`Scanned files: ${result.scannedFiles.length}`);
   console.log(`Stack: ${result.detectedStack.map((entry) => entry.name).join(", ") || "none"}`);
@@ -15,30 +18,51 @@ function printSummary(result: Awaited<ReturnType<typeof analyzeRepository>>) {
   console.log(`API endpoints: ${result.apiEndpoints.length}`);
 }
 
+function printExplanation(result: RepositoryAnalysisResult) {
+  const explanation = result.generatedDocs.map((draft) => draft.content.trim()).join("\n\n");
+  console.log(explanation);
+}
+
+function printUsage() {
+  console.log("RepoLens Community Edition");
+  console.log("Usage:");
+  console.log("  repolens analyze <repository-path> [--json]");
+  console.log("  repolens explain <repository-path>");
+}
+
+async function analyzeRepositoryPath(
+  repositoryPath: string
+): Promise<RepositoryAnalysisResult | null> {
+  const repositoryStats = await stat(repositoryPath).catch(() => null);
+
+  if (!repositoryStats?.isDirectory()) {
+    console.error(`Invalid repository path: ${repositoryPath}`);
+    return null;
+  }
+
+  const absoluteRepositoryPath = path.resolve(repositoryPath);
+
+  return analyzeRepository({
+    rootPath: absoluteRepositoryPath,
+    repositoryFullName: path.basename(absoluteRepositoryPath),
+    repositoryUrl: "",
+    defaultBranch: null
+  });
+}
+
 export async function runCli(argv: string[]): Promise<number> {
   const [command, repositoryPath, ...flags] = argv;
 
   if (!command) {
-    console.log("RepoLens Community Edition");
-    console.log("Usage: repolens analyze <repository-path>");
+    printUsage();
     return 0;
   }
 
   if (command === "analyze" && repositoryPath) {
-    const repositoryStats = await stat(repositoryPath).catch(() => null);
-
-    if (!repositoryStats?.isDirectory()) {
-      console.error(`Invalid repository path: ${repositoryPath}`);
+    const result = await analyzeRepositoryPath(repositoryPath);
+    if (!result) {
       return 1;
     }
-
-    const absoluteRepositoryPath = path.resolve(repositoryPath);
-    const result = await analyzeRepository({
-      rootPath: absoluteRepositoryPath,
-      repositoryFullName: path.basename(absoluteRepositoryPath),
-      repositoryUrl: "",
-      defaultBranch: null
-    });
 
     if (flags.includes("--json")) {
       console.log(JSON.stringify(result, null, 2));
@@ -49,7 +73,18 @@ export async function runCli(argv: string[]): Promise<number> {
     return 0;
   }
 
+  if (command === "explain" && repositoryPath) {
+    const result = await analyzeRepositoryPath(repositoryPath);
+    if (!result) {
+      return 1;
+    }
+
+    printExplanation(result);
+    return 0;
+  }
+
   console.error(`Unknown command: ${command}`);
+  printUsage();
   return 1;
 }
 

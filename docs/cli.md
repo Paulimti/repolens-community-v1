@@ -7,12 +7,14 @@ RepoLens Community Edition provides a single local-first CLI entrypoint for repo
 ```bash
 npm run analyze -- <repository-path>
 npm run analyze -- <repository-path> --json
+npm run explain -- <repository-path>
 ```
 
 ## Underlying Command
 
 ```bash
 node apps/cli/dist/index.js analyze <repository-path>
+node apps/cli/dist/index.js explain <repository-path>
 ```
 
 ## Flags
@@ -25,6 +27,12 @@ Analyze the current repository:
 
 ```bash
 npm run analyze -- .
+```
+
+Print a human-readable repository summary:
+
+```bash
+npm run explain -- .
 ```
 
 Analyze another local repository:

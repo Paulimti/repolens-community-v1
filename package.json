@@ -9,7 +9,8 @@
     "dev": "tsc -b --watch",
     "lint": "eslint .",
     "test": "vitest run --passWithNoTests",
-    "analyze": "node apps/cli/dist/index.js analyze"
+    "analyze": "node apps/cli/dist/index.js analyze",
+    "explain": "node apps/cli/dist/index.js explain"
   },
   "workspaces": [
     "apps/*",

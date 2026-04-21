@@ -41,6 +41,7 @@ Useful workspace scripts:
 - `npm run lint` runs ESLint across the repository
 - `npm test` runs the Vitest suite
 - `npm run analyze -- <path>` runs the local CLI after the workspace has been built
+- `npm run explain -- <path>` prints a human-readable repository summary
 
 Additional setup notes are available in [docs/installation.md](docs/installation.md).
 
@@ -64,6 +65,12 @@ Return the full analysis result as JSON:
 npm run analyze -- . --json
 ```
 
+Print a human-readable repository summary:
+
+```bash
+npm run explain -- .
+```
+
 ## CLI Usage Examples
 
 Recommended workspace command:
@@ -71,12 +78,14 @@ Recommended workspace command:
 ```bash
 npm run analyze -- <repository-path>
 npm run analyze -- <repository-path> --json
+npm run explain -- <repository-path>
 ```
 
 Underlying CLI command:
 
 ```bash
 node apps/cli/dist/index.js analyze <repository-path>
+node apps/cli/dist/index.js explain <repository-path>
 ```
 
 Analyze the included examples:
@@ -195,6 +204,7 @@ npm run dev
 npm run lint
 npm test
 npm run analyze -- .
+npm run explain -- .
 ```
 
 Common workflow:
