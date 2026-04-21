@@ -30,7 +30,7 @@ RepoLens Community Edition is the public open-source analysis engine and local C
 | --- | --- | --- |
 | Repository access | Local filesystem paths only | Private product surface |
 | Analysis engine | Included in this public repo | Included privately |
-| CLI usage | Included | Not the focus here |
+| CLI usage | Included | Cloud product workflows live outside this repository |
 | Private repository integrations | Not included | Cloud-only |
 | Auth and account flows | Not included | Cloud-only |
 | Collaboration workflows | Not included | Cloud-only |
@@ -39,3 +39,9 @@ RepoLens Community Edition is the public open-source analysis engine and local C
 ## Decision Rule
 
 If a feature depends on hosted services, account state, private-repository access, or multi-user collaboration, it should stay out of this public repository.
+
+## Related Docs
+
+- [Architecture](architecture.md)
+- [CLI](cli.md)
+- [README](../README.md)

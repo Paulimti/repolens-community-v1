@@ -35,3 +35,10 @@ The current community edition analysis result includes:
 ## Scope Notes
 
 This architecture is intentionally limited to public community-edition capabilities. It does not include hosted access, private-repository integrations, authentication flows, collaboration features, billing, or other cloud-only concerns.
+
+## Related Docs
+
+- [Installation](installation.md)
+- [CLI](cli.md)
+- [Feature Boundary](feature-boundary.md)
+- [README](../README.md)

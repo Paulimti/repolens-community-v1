@@ -101,7 +101,7 @@ Example summary output for `./examples/express-basic`:
 
 ```text
 Repository: express-basic
-Scanned files: 3
+Scanned files: 5
 Stack: JavaScript, TypeScript, Node.js, Express
 Modules: 1
 Dependencies: 0
@@ -112,7 +112,7 @@ Example summary output for `./examples/nextjs-basic`:
 
 ```text
 Repository: nextjs-basic
-Scanned files: 5
+Scanned files: 7
 Stack: JavaScript, TypeScript, Node.js, Next.js, React
 Modules: 3
 Dependencies: 0
@@ -175,7 +175,15 @@ examples               Small sample repositories for trying the analyzer
 docs                   Installation, architecture, CLI, examples, and roadmap documentation
 ```
 
-For a package-level overview, see [docs/architecture.md](docs/architecture.md).
+## Documentation
+
+- [Installation](docs/installation.md)
+- [CLI](docs/cli.md)
+- [Architecture](docs/architecture.md)
+- [Examples](docs/examples.md)
+- [Feature Boundary](docs/feature-boundary.md)
+- [Roadmap](ROADMAP.md)
+- [Contributing](CONTRIBUTING.md)
 
 ## Local Development
 

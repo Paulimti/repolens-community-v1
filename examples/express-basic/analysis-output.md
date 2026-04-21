@@ -6,7 +6,7 @@ This file contains example output captured from the current `examples/express-ba
 
 ```text
 Repository: express-basic
-Scanned files: 3
+Scanned files: 5
 Stack: JavaScript, TypeScript, Node.js, Express
 Modules: 1
 Dependencies: 0
@@ -19,7 +19,7 @@ API endpoints: 2
 {
   "documentationMetadata": {
     "repositoryFullName": "express-basic",
-    "scannedFileCount": 3,
+    "scannedFileCount": 5,
     "moduleCount": 1,
     "moduleDependencyCount": 0,
     "apiEndpointCount": 2

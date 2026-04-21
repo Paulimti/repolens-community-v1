@@ -7,13 +7,13 @@ This fixture is a small Express repository for trying RepoLens Community Edition
 From the workspace root, run:
 
 ```bash
-node apps/cli/dist/index.js analyze ./examples/express-basic
+npm run analyze -- ./examples/express-basic
 ```
 
 For the full structured result:
 
 ```bash
-node apps/cli/dist/index.js analyze ./examples/express-basic --json
+npm run analyze -- ./examples/express-basic --json
 ```
 
 ## What RepoLens Detects Here

@@ -14,19 +14,20 @@ This repository includes two small fixture repositories under [`examples/`](../e
 Analyze any local repository path:
 
 ```bash
-node apps/cli/dist/index.js analyze "E:\path\to\your-repository"
+npm run analyze -- "E:\path\to\your-repository"
 ```
 
 Return JSON for scripting or inspection:
 
 ```bash
-node apps/cli/dist/index.js analyze "E:\path\to\your-repository" --json
+npm run analyze -- "E:\path\to\your-repository" --json
 ```
 
 ## Framework-Specific Examples
 
 - [Express example](../examples/express-basic/README.md)
 - [Next.js example](../examples/nextjs-basic/README.md)
+- [Examples folder guide](../examples/README.md)
 
 ## What To Look For
 
@@ -37,3 +38,9 @@ When you run the analyzer, the current community edition can surface:
 - internal dependency relationships
 - extracted API endpoints from supported framework patterns
 - generated summary-oriented documentation fields in JSON output
+
+## Related Docs
+
+- [Installation](installation.md)
+- [CLI](cli.md)
+- [README](../README.md)

@@ -7,13 +7,13 @@ This fixture is a small Next.js repository for trying RepoLens Community Edition
 From the workspace root, run:
 
 ```bash
-node apps/cli/dist/index.js analyze ./examples/nextjs-basic
+npm run analyze -- ./examples/nextjs-basic
 ```
 
 For the full structured result:
 
 ```bash
-node apps/cli/dist/index.js analyze ./examples/nextjs-basic --json
+npm run analyze -- ./examples/nextjs-basic --json
 ```
 
 ## What RepoLens Detects Here

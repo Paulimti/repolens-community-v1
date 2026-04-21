@@ -2,7 +2,14 @@
 
 RepoLens Community Edition provides a single local-first CLI entrypoint for repository analysis.
 
-## Command
+## Recommended Workspace Command
+
+```bash
+npm run analyze -- <repository-path>
+npm run analyze -- <repository-path> --json
+```
+
+## Underlying Command
 
 ```bash
 node apps/cli/dist/index.js analyze <repository-path>
@@ -17,19 +24,19 @@ node apps/cli/dist/index.js analyze <repository-path>
 Analyze the current repository:
 
 ```bash
-node apps/cli/dist/index.js analyze .
+npm run analyze -- .
 ```
 
 Analyze another local repository:
 
 ```bash
-node apps/cli/dist/index.js analyze "E:\path\to\other-repo"
+npm run analyze -- "E:\path\to\other-repo"
 ```
 
 Return JSON output:
 
 ```bash
-node apps/cli/dist/index.js analyze "E:\path\to\other-repo" --json
+npm run analyze -- "E:\path\to\other-repo" --json
 ```
 
 ## Behavior Notes
@@ -51,6 +58,7 @@ The default summary output currently reports:
 
 ## Related Docs
 
-- [docs/examples.md](examples.md)
-- [docs/feature-boundary.md](feature-boundary.md)
-- [README.md](../README.md)
+- [Installation](installation.md)
+- [Examples](examples.md)
+- [Feature Boundary](feature-boundary.md)
+- [README](../README.md)

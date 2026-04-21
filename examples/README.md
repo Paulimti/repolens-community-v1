@@ -32,7 +32,7 @@ All commands below should be run from the repository root.
 Analyze the Express fixture:
 
 ```bash
-node apps/cli/dist/index.js analyze ./examples/express-basic
+npm run analyze -- ./examples/express-basic
 ```
 
 What you should see:
@@ -51,13 +51,13 @@ Example output:
 Analyze the Next.js fixture:
 
 ```bash
-node apps/cli/dist/index.js analyze ./examples/nextjs-basic
+npm run analyze -- ./examples/nextjs-basic
 ```
 
 Use JSON output if you want the full structured result:
 
 ```bash
-node apps/cli/dist/index.js analyze ./examples/nextjs-basic --json
+npm run analyze -- ./examples/nextjs-basic --json
 ```
 
 What you should see:
@@ -76,7 +76,7 @@ Example output:
 Once the examples work, point the CLI at any local repository path:
 
 ```bash
-node apps/cli/dist/index.js analyze "E:\path\to\your-repository"
+npm run analyze -- "E:\path\to\your-repository"
 ```
 
 ## Scope Reminder
