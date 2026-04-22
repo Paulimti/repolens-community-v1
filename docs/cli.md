@@ -35,6 +35,8 @@ Print a human-readable repository summary:
 npm run explain -- .
 ```
 
+The `explain` command prints a terminal-friendly repository overview first, followed by onboarding and architecture summaries derived from the local analysis result.
+
 Analyze another local repository:
 
 ```bash

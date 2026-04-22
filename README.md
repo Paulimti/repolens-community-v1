@@ -41,7 +41,7 @@ Useful workspace scripts:
 - `npm run lint` runs ESLint across the repository
 - `npm test` runs the Vitest suite
 - `npm run analyze -- <path>` runs the local CLI after the workspace has been built
-- `npm run explain -- <path>` prints a human-readable repository summary
+- `npm run explain -- <path>` prints a human-readable repository summary with a terminal-formatted overview
 
 Additional setup notes are available in [docs/installation.md](docs/installation.md).
 

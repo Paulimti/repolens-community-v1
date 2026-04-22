@@ -8,6 +8,10 @@ import {
   analyzeRepository,
   type RepositoryAnalysisResult
 } from "@repolens/core";
+import {
+  formatGeneratedDocumentForTerminal,
+  formatRepositoryOverviewForTerminal
+} from "./format-repository-overview-output.js";
 
 function printSummary(result: RepositoryAnalysisResult) {
   console.log(`Repository: ${result.documentationMetadata.repositoryFullName}`);
@@ -19,7 +23,13 @@ function printSummary(result: RepositoryAnalysisResult) {
 }
 
 function printExplanation(result: RepositoryAnalysisResult) {
-  const explanation = result.generatedDocs.map((draft) => draft.content.trim()).join("\n\n");
+  const explanation = result.generatedDocs
+    .map((draft) =>
+      draft.docType === "PROJECT_OVERVIEW"
+        ? formatRepositoryOverviewForTerminal(result)
+        : formatGeneratedDocumentForTerminal(draft.content)
+    )
+    .join("\n\n");
   console.log(explanation);
 }
 
