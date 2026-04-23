@@ -9,6 +9,41 @@ const stackCategoryOrder: StackCategory[] = [
   "tooling"
 ];
 
+type RepositoryOverviewJsonOutput = {
+  title: "Repository Overview";
+  repository: {
+    name: string;
+    url: string | null;
+    defaultBranch: string | null;
+  };
+  detectedStack: Array<{
+    category: StackCategory;
+    entries: Array<{
+      name: string;
+      evidence: string;
+    }>;
+  }>;
+  analysisSignals: {
+    scannedFiles: number;
+    parsedModules: number;
+    moduleDependencies: number;
+    apiEndpoints: number;
+  };
+  likelyEntryPoints: Array<{
+    role: string;
+    path: string;
+    logicalName: string;
+    endpoints: string[];
+  }>;
+  importantModules: Array<{
+    logicalName: string;
+    moduleType: LogicalModuleType;
+    path: string;
+    incomingDependencies: number;
+    outgoingDependencies: number;
+  }>;
+};
+
 function formatStackByCategory(result: RepositoryAnalysisResult): string[] {
   if (result.detectedStack.length === 0) {
     return ["- No stack signals were detected from package metadata or project structure."];
@@ -31,6 +66,26 @@ function formatStackByCategory(result: RepositoryAnalysisResult): string[] {
     });
 }
 
+function getStackByCategory(result: RepositoryAnalysisResult) {
+  const entriesByCategory = new Map<StackCategory, Array<{ name: string; evidence: string }>>();
+
+  for (const entry of result.detectedStack) {
+    const entries = entriesByCategory.get(entry.category) ?? [];
+    entries.push({
+      name: entry.name,
+      evidence: entry.evidence
+    });
+    entriesByCategory.set(entry.category, entries);
+  }
+
+  return stackCategoryOrder
+    .filter((category) => (entriesByCategory.get(category)?.length ?? 0) > 0)
+    .map((category) => ({
+      category,
+      entries: entriesByCategory.get(category) ?? []
+    }));
+}
+
 const moduleTypePriority: Record<LogicalModuleType, number> = {
   api: 6,
   route: 5,
@@ -45,6 +100,22 @@ const moduleTypePriority: Record<LogicalModuleType, number> = {
 };
 
 function formatLikelyEntryPoints(result: RepositoryAnalysisResult): string[] {
+  const entryPoints = getLikelyEntryPoints(result);
+
+  if (entryPoints.length === 0) {
+    return ["- No likely entry points were inferred from the current analysis result."];
+  }
+
+  return entryPoints.map((entryPoint) => {
+    const details = entryPoint.endpoints.length > 0
+      ? ` -> ${entryPoint.endpoints.join(", ")}`
+      : "";
+
+    return `- ${entryPoint.role}: ${entryPoint.path} (${entryPoint.logicalName})${details}`;
+  });
+}
+
+function getLikelyEntryPoints(result: RepositoryAnalysisResult) {
   const endpointMethodsByPath = new Map<string, string[]>();
 
   for (const endpoint of result.apiEndpoints) {
@@ -53,7 +124,7 @@ function formatLikelyEntryPoints(result: RepositoryAnalysisResult): string[] {
     endpointMethodsByPath.set(endpoint.sourcePath, entries);
   }
 
-  const entryPoints = result.detectedModules
+  return result.detectedModules
     .filter(
       (module) =>
         endpointMethodsByPath.has(module.path) ||
@@ -69,24 +140,28 @@ function formatLikelyEntryPoints(result: RepositoryAnalysisResult): string[] {
 
       return left.path.localeCompare(right.path);
     })
-    .slice(0, 6);
-
-  if (entryPoints.length === 0) {
-    return ["- No likely entry points were inferred from the current analysis result."];
-  }
-
-  return entryPoints.map((module) => {
-    const endpointMethods = endpointMethodsByPath.get(module.path);
-    const role = endpointMethods?.length ? "api" : module.moduleType;
-    const details = endpointMethods?.length
-      ? ` -> ${endpointMethods.join(", ")}`
-      : "";
-
-    return `- ${role}: ${module.path} (${module.logicalName})${details}`;
-  });
+    .slice(0, 6)
+    .map((module) => ({
+      role: endpointMethodsByPath.has(module.path) ? "api" : module.moduleType,
+      path: module.path,
+      logicalName: module.logicalName,
+      endpoints: endpointMethodsByPath.get(module.path) ?? []
+    }));
 }
 
 function formatImportantModules(result: RepositoryAnalysisResult): string[] {
+  const importantModules = getImportantModules(result);
+
+  if (importantModules.length === 0) {
+    return ["- No important modules were inferred from the current analysis result."];
+  }
+
+  return importantModules.map((module) => {
+    return `- ${module.logicalName} [${module.moduleType}] ${module.path} (incoming=${module.incomingDependencies}, outgoing=${module.outgoingDependencies})`;
+  });
+}
+
+function getImportantModules(result: RepositoryAnalysisResult) {
   const incomingCountByPath = new Map<string, number>();
   const outgoingCountByPath = new Map<string, number>();
   const endpointPaths = new Set(result.apiEndpoints.map((endpoint) => endpoint.sourcePath));
@@ -102,7 +177,7 @@ function formatImportantModules(result: RepositoryAnalysisResult): string[] {
     );
   }
 
-  const importantModules = [...result.detectedModules]
+  return [...result.detectedModules]
     .map((module) => {
       const incoming = incomingCountByPath.get(module.path) ?? 0;
       const outgoing = outgoingCountByPath.get(module.path) ?? 0;
@@ -131,15 +206,14 @@ function formatImportantModules(result: RepositoryAnalysisResult): string[] {
 
       return left.module.path.localeCompare(right.module.path);
     })
-    .slice(0, 5);
-
-  if (importantModules.length === 0) {
-    return ["- No important modules were inferred from the current analysis result."];
-  }
-
-  return importantModules.map(({ module, incoming, outgoing }) => {
-    return `- ${module.logicalName} [${module.moduleType}] ${module.path} (incoming=${incoming}, outgoing=${outgoing})`;
-  });
+    .slice(0, 5)
+    .map(({ module, incoming, outgoing }) => ({
+      logicalName: module.logicalName,
+      moduleType: module.moduleType,
+      path: module.path,
+      incomingDependencies: incoming,
+      outgoingDependencies: outgoing
+    }));
 }
 
 export function formatRepositoryOverviewForTerminal(
@@ -172,4 +246,26 @@ export function formatRepositoryOverviewForTerminal(
 
 export function formatGeneratedDocumentForTerminal(content: string): string {
   return content.replace(/^#{1,6}\s+/gm, "").trim();
+}
+
+export function formatRepositoryOverviewForJson(
+  result: RepositoryAnalysisResult
+): RepositoryOverviewJsonOutput {
+  return {
+    title: "Repository Overview",
+    repository: {
+      name: result.documentationMetadata.repositoryFullName,
+      url: result.documentationMetadata.repositoryUrl || null,
+      defaultBranch: result.documentationMetadata.defaultBranch
+    },
+    detectedStack: getStackByCategory(result),
+    analysisSignals: {
+      scannedFiles: result.scannedFiles.length,
+      parsedModules: result.detectedModules.length,
+      moduleDependencies: result.moduleDependencies.length,
+      apiEndpoints: result.apiEndpoints.length
+    },
+    likelyEntryPoints: getLikelyEntryPoints(result),
+    importantModules: getImportantModules(result)
+  };
 }

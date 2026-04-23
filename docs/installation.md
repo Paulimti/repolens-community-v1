@@ -43,6 +43,7 @@ npm run analyze -- .
 
 ```bash
 npm run explain -- .
+npm run explain -- . --json
 ```
 
 ## Related Docs

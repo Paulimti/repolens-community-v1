@@ -10,6 +10,7 @@ import {
 } from "@repolens/core";
 import {
   formatGeneratedDocumentForTerminal,
+  formatRepositoryOverviewForJson,
   formatRepositoryOverviewForTerminal
 } from "./format-repository-overview-output.js";
 
@@ -33,11 +34,34 @@ function printExplanation(result: RepositoryAnalysisResult) {
   console.log(explanation);
 }
 
+function printExplanationJson(result: RepositoryAnalysisResult) {
+  const onboardingGuide = result.generatedDocs.find(
+    (draft) => draft.docType === "ONBOARDING_GUIDE"
+  );
+  const architectureSummary = result.generatedDocs.find(
+    (draft) => draft.docType === "ARCHITECTURE_SUMMARY"
+  );
+
+  console.log(
+    JSON.stringify(
+      {
+        repositoryOverview: formatRepositoryOverviewForJson(result),
+        summaries: {
+          onboardingGuide: onboardingGuide?.content ?? "",
+          architectureSummary: architectureSummary?.content ?? ""
+        }
+      },
+      null,
+      2
+    )
+  );
+}
+
 function printUsage() {
   console.log("RepoLens Community Edition");
   console.log("Usage:");
   console.log("  repolens analyze <repository-path> [--json]");
-  console.log("  repolens explain <repository-path>");
+  console.log("  repolens explain <repository-path> [--json]");
 }
 
 async function analyzeRepositoryPath(
@@ -87,6 +111,11 @@ export async function runCli(argv: string[]): Promise<number> {
     const result = await analyzeRepositoryPath(repositoryPath);
     if (!result) {
       return 1;
+    }
+
+    if (flags.includes("--json")) {
+      printExplanationJson(result);
+      return 0;
     }
 
     printExplanation(result);

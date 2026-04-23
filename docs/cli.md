@@ -8,6 +8,7 @@ RepoLens Community Edition provides a single local-first CLI entrypoint for repo
 npm run analyze -- <repository-path>
 npm run analyze -- <repository-path> --json
 npm run explain -- <repository-path>
+npm run explain -- <repository-path> --json
 ```
 
 ## Underlying Command
@@ -35,7 +36,13 @@ Print a human-readable repository summary:
 npm run explain -- .
 ```
 
-The `explain` command prints a terminal-friendly repository overview first, including likely entry points and important modules, followed by onboarding and architecture summaries derived from the local analysis result.
+Return the explain output as JSON:
+
+```bash
+npm run explain -- . --json
+```
+
+The `explain` command prints a terminal-friendly repository overview first, including likely entry points and important modules, followed by onboarding and architecture summaries derived from the local analysis result. With `--json`, it returns the repository overview plus the generated summaries as structured JSON.
 
 Analyze another local repository:
 

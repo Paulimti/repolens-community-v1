@@ -69,6 +69,7 @@ Print a human-readable repository summary:
 
 ```bash
 npm run explain -- .
+npm run explain -- . --json
 ```
 
 ## CLI Usage Examples
@@ -99,6 +100,7 @@ npm run analyze -- ./examples/nextjs-basic --json
 Browse the [examples directory](examples/) or start with [docs/examples.md](docs/examples.md) for fixture-specific usage notes and sample output.
 
 The `explain` command highlights likely entry points and important modules alongside the repository summary.
+Use `--json` with `explain` when you want the overview and summaries as a structured JSON document.
 
 If the path is invalid, the CLI returns an error:
 
