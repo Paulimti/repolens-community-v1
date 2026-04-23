@@ -14,6 +14,11 @@ import {
   formatRepositoryOverviewForTerminal
 } from "./format-repository-overview-output.js";
 
+const commandUsageLines = [
+  "  repolens analyze <repository-path> [--json]",
+  "  repolens explain <repository-path> [--json]"
+];
+
 function printSummary(result: RepositoryAnalysisResult) {
   console.log(`Repository: ${result.documentationMetadata.repositoryFullName}`);
   console.log(`Scanned files: ${result.scannedFiles.length}`);
@@ -60,8 +65,13 @@ function printExplanationJson(result: RepositoryAnalysisResult) {
 function printUsage() {
   console.log("RepoLens Community Edition");
   console.log("Usage:");
-  console.log("  repolens analyze <repository-path> [--json]");
-  console.log("  repolens explain <repository-path> [--json]");
+  for (const usageLine of commandUsageLines) {
+    console.log(usageLine);
+  }
+  console.log("");
+  console.log("Commands:");
+  console.log("  analyze  Print the repository analysis summary or full JSON result.");
+  console.log("  explain  Print a readable repository overview and generated summaries.");
 }
 
 async function analyzeRepositoryPath(
