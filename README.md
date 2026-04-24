@@ -9,6 +9,21 @@ Open-source repository analysis for understanding a local codebase fast.
 
 RepoLens Community Edition helps you inspect a repository from the command line and turn source code into a clear structural snapshot. It scans files, detects the stack, parses source code, extracts modules and API routes, builds dependency relationships, and generates architecture-oriented summaries.
 
+## Featured On Product Hunt
+
+![Product Hunt Product of the Day #7](https://img.shields.io/badge/Product%20Hunt-Product%20of%20the%20Day%20%237-da552f)
+
+As of April 3, 2026, RepoLens was featured by Product Hunt in its code review tools category, highlighted in recent launches, and recognized as Product of the Day #7.
+
+If you found the project through Product Hunt, this repository is the open-source Community Edition focused on local repository analysis, architecture understanding, and CLI workflows.
+
+- Product Hunt category: https://www.producthunt.com/categories/code-review-tools?order=recent_launches#content
+- Product Hunt launch: https://www.producthunt.com/products/repolens
+- Website: https://repolensai.com/
+- GitHub: https://github.com/mohosin2126/repolens-community
+
+If you would like to support RepoLens, you can vote on Product Hunt and star the project on GitHub.
+
 ## Feature Highlights
 
 - Analyze any local repository path from the CLI
@@ -153,17 +168,15 @@ Use `--json` when you want the full structured analysis result for tooling, debu
 
 ## Screenshots
 
-CLI output:
+The images below are the Product Hunt assets included in `docs/images`.
 
-<!-- Add screenshot at docs/images/cli-output.png -->
+Product Hunt launch:
 
-Dependency graph:
+![RepoLens Product Hunt launch](./docs/images/product-hunt.png)
 
-<!-- Add screenshot at docs/images/dependency-graph.png -->
+Recent code review tools highlight:
 
-Architecture summary:
-
-<!-- Add screenshot at docs/images/architecture-summary.png -->
+![RepoLens recent launches highlight](./docs/images/recent-tools.png)
 
 ## Supported Frameworks And Languages
 
