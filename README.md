@@ -1,6 +1,6 @@
 # RepoLens Community Edition
 
-[![License](https://img.shields.io/github/license/mohosin2126/repolens-community?label=license)](LICENSE)
+[![License](https://img.shields.io/github/license/Paulimti/repolens-community-v1?label=license)](LICENSE)
 
 Workspace version: `0.1.0`  
 Distribution: source repository and local CLI workspace, not a published npm package
@@ -20,7 +20,7 @@ If you found the project through Product Hunt, this repository is the open-sourc
 - Product Hunt category: https://www.producthunt.com/categories/code-review-tools?order=recent_launches#content
 - Product Hunt launch: https://www.producthunt.com/products/repolens
 - Website: https://repolensai.com/
-- GitHub: https://github.com/mohosin2126/repolens-community
+- GitHub: https://github.com/Paulimti/repolens-community-v1
 
 If you would like to support RepoLens, you can vote on Product Hunt and star the project on GitHub.
 
