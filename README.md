@@ -72,6 +72,23 @@ npm run explain -- .
 npm run explain -- . --json
 ```
 
+## Explain Command
+
+Use `explain` when you want a more guided summary than the default `analyze` output.
+
+```bash
+npm run explain -- <repository-path>
+npm run explain -- <repository-path> --json
+```
+
+The terminal output includes:
+
+- a repository overview
+- detected stack details
+- likely entry points
+- important modules to inspect first
+- onboarding and architecture summaries
+
 ## CLI Usage Examples
 
 Recommended workspace command:
