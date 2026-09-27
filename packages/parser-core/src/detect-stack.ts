@@ -203,6 +203,33 @@ export async function detectStack(
       name: "pnpm Workspaces",
       category: "tooling",
       evidence: hasFile(filePaths, (path) => path === "pnpm-workspace.yaml")
+    },
+    {
+      name: "Bun",
+      category: "runtime",
+      evidence: hasFile(
+        filePaths,
+        (path) => path === "bun.lockb" || path === "bun.lock"
+      )
+    },
+    {
+      name: "Deno",
+      category: "runtime",
+      evidence: hasFile(
+        filePaths,
+        (path) =>
+          path === "deno.json" ||
+          path === "deno.jsonc" ||
+          path === "deno.lock"
+      )
+    },
+    {
+      name: "Biome",
+      category: "tooling",
+      evidence: hasFile(
+        filePaths,
+        (path) => path === "biome.json" || path === "biome.jsonc"
+      )
     }
   ];
 
@@ -225,6 +252,9 @@ export async function detectStack(
   }> = [
     { dependencyName: "react", name: "React", category: "framework" },
     { dependencyName: "next", name: "Next.js", category: "framework" },
+    { dependencyName: "astro", name: "Astro", category: "framework" },
+    { dependencyName: "@remix-run/node", name: "Remix", category: "framework" },
+    { dependencyName: "@remix-run/react", name: "Remix", category: "framework" },
     { dependencyName: "vue", name: "Vue", category: "framework" },
     { dependencyName: "nuxt", name: "Nuxt", category: "framework" },
     { dependencyName: "@angular/core", name: "Angular", category: "framework" },
@@ -236,9 +266,12 @@ export async function detectStack(
     { dependencyName: "hono", name: "Hono", category: "framework" },
     { dependencyName: "vite", name: "Vite", category: "tooling" },
     { dependencyName: "tailwindcss", name: "Tailwind CSS", category: "tooling" },
+    { dependencyName: "@biomejs/biome", name: "Biome", category: "tooling" },
     { dependencyName: "prisma", name: "Prisma", category: "database" },
     { dependencyName: "@prisma/client", name: "Prisma Client", category: "database" },
-    { dependencyName: "drizzle-orm", name: "Drizzle ORM", category: "database" }
+    { dependencyName: "drizzle-orm", name: "Drizzle ORM", category: "database" },
+    { dependencyName: "mongoose", name: "Mongoose", category: "database" },
+    { dependencyName: "typeorm", name: "TypeORM", category: "database" }
   ];
 
   for (const signal of dependencySignals) {

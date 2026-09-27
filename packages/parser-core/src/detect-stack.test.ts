@@ -50,4 +50,28 @@ describe("detectStack", () => {
       ])
     );
   });
+
+  it("detects modern full-stack libraries including astro, bun, and mongoose", async () => {
+    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "repolens-stack-modern-"));
+    tempDirectories.push(tempRoot);
+
+    await writeFile(
+      path.join(tempRoot, "package.json"),
+      JSON.stringify({
+        dependencies: {
+          astro: "^4.0.0",
+          mongoose: "^8.0.0"
+        }
+      })
+    );
+    await writeFile(path.join(tempRoot, "bun.lockb"), "");
+    await writeFile(path.join(tempRoot, "biome.json"), "{}");
+
+    const files = await scanRepositoryFiles(tempRoot);
+    const stack = await detectStack(tempRoot, files);
+
+    expect(stack.map((entry) => entry.name)).toEqual(
+      expect.arrayContaining(["Bun", "Astro", "Mongoose", "Biome"])
+    );
+  });
 });
